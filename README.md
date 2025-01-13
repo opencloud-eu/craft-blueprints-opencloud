@@ -1,3 +1,3 @@
-# craft-blueprints-owncloud
-* craft --add-blueprint-repository https://github.com/owncloud/craft-blueprints-owncloud.git
-* craft owncloud-client
+# craft-blueprints-opencloud
+* craft --add-blueprint-repository https://github.com/opencloud-eu/craft-blueprints-opencloud
+* craft opencloud-desktop
