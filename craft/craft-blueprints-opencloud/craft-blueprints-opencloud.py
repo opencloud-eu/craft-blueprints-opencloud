@@ -3,9 +3,9 @@ import info
 
 class subinfo(info.infoclass):
     def setTargets(self):
-        for ver in ["master", "5"]:
-            self.svnTargets[ver] = f"[git]https://github.com/owncloud/craft-blueprints-owncloud.git|{ver}|"
-        self.defaultTarget = "master"
+        for ver in ["main"]:
+            self.svnTargets[ver] = f"[git]https://github.com/opencloud-eu/craft-blueprints-opencloud.git|{ver}|"
+        self.defaultTarget = "main"
 
     def setDependencies(self):
         self.buildDependencies["craft/craft-core"] = "default"
