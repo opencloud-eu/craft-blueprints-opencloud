@@ -32,7 +32,7 @@ class subinfo(info.infoclass):
         self.buildDependencies["dev-utils/cmake"] = None
         self.buildDependencies["kde/frameworks/extra-cmake-modules"] = None
 
-        self.runtimeDependencies["libs/libre-graph-api-cpp-qt-client"] = None
+        self.runtimeDependencies["opencloud/libre-graph-api-cpp-qt-client"] = None
         self.runtimeDependencies["libs/sparkle"] = None
         self.runtimeDependencies["libs/zlib"] = None
         self.runtimeDependencies["libs/sqlite"] = None
