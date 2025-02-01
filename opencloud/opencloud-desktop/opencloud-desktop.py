@@ -8,6 +8,7 @@ import subprocess
 import sys
 
 import info
+from Blueprints.CraftPackageObject import CraftPackageObject
 from Packager.NullsoftInstallerPackager import NullsoftInstallerPackager
 
 
