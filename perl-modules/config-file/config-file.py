@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import info
 from Package.PerlPackageBase import *
+from Utils import CraftHash
 
 
 class subinfo(info.infoclass):
@@ -34,9 +35,9 @@ class Package(PerlPackageBase):
         with utils.ScopedEnv(env):
             return utils.system(Arguments.formatCommand(["perl", "Build.PL"], self.subinfo.options.configure.args))
 
-#        self.enterSourceDir()
-#        Path("Makefile.PL").symlink_to("Build.PL")
-#        return super().configure()
+    #        self.enterSourceDir()
+    #        Path("Makefile.PL").symlink_to("Build.PL")
+    #        return super().configure()
 
     def make(self):
         self.enterBuildDir()

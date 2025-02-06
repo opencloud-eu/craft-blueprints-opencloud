@@ -1,5 +1,6 @@
 import info
 from Package.CMakePackageBase import *
+from Utils import CraftHash
 
 
 class subinfo(info.infoclass):
@@ -26,6 +27,7 @@ class subinfo(info.infoclass):
         self.runtimeDependencies["libs/cpr"] = None
         self.runtimeDependencies["libs/gpgme/gpgme"] = None
         self.buildDependencies["libs/nlohmann-json"] = None
+
 
 class Package(CMakePackageBase):
     def __init__(self, **kwargs):
