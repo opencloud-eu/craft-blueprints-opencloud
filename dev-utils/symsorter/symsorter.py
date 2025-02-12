@@ -18,8 +18,7 @@ class subinfo(info.infoclass):
             elif CraftCore.compiler.isMacOS:
                 self.targets[ver] = f"https://github.com/getsentry/symbolicator/releases/download/0.7.0/symsorter-Darwin-universal"
             elif CraftCore.compiler.isLinux:
-                # sysmsorter is a rust binary and we need a build on centos7...
-                self.targets[ver] = f"https://download.owncloud.com/desktop/craft/symsorter/symsorter.7z"
+                raise "Fix me"
                 self.targetDigests["0.7.0"] = (["4665df5b6f0d2b59f28deae5ffebe68de677406b0c965b87ea6d54940187614d"], CraftHash.HashAlgorithm.SHA256)
         self.defaultTarget = "0.7.0"
 
