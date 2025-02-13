@@ -6,6 +6,7 @@ from pathlib import Path
 import info
 import utils
 from Blueprints.CraftPackageObject import CraftPackageObject
+from Packager.AppxPackager import AppxPackager
 from Packager.NullsoftInstallerPackager import NullsoftInstallerPackager
 
 
@@ -245,7 +246,7 @@ class Package(CMakePackageBase):
         self.defines["company"] = "OpenCloud GmbH"
 
         exePath = f"{self.defines['appname']}{CraftCore.compiler.executableSuffix}"
-        if isinstance(self, NullsoftInstallerPackager):
+        if isinstance(self, (NullsoftInstallerPackager, AppxPackager)):
             exePath = f"bin/{exePath}"
         self.defines["shortcuts"] = [
             {
