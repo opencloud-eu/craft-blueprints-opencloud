@@ -21,7 +21,7 @@ class subinfo(info.infoclass):
         self.svnTargets["main"] = "https://github.com/opencloud-eu/desktop.git|main"
         self.defaultTarget = "main"
 
-        self.description = "OpenCloud Desktop Client"
+        self.description = "OpenCloud Desktop"
         self.displayName = "OpenCloud"
         self.webpage = "https://github.com/opencloud-eu/desktop"
 
@@ -240,7 +240,7 @@ class Package(CMakePackageBase):
     def createPackage(self):
         self.blacklist_file.append(os.path.join(self.blueprintDir(), "blacklist.txt"))
         self.defines["appname"] = self.applicationExecutable
-        self.defines["appimage_native_package_name"] = f'{self.applicationShortname.lower().replace("_", "-")}-client'
+        self.defines["appimage_native_package_name"] = f'{self.applicationShortname.lower().replace("_", "-")}-desktop'
         self.defines["apppath"] = "Applications/KDE/" + self.applicationExecutable + ".app"
         self.defines["company"] = "OpenCloud GmbH"
 
