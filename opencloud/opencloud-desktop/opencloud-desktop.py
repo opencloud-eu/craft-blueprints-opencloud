@@ -31,7 +31,6 @@ class subinfo(info.infoclass):
         self.buildDependencies["kde/frameworks/extra-cmake-modules"] = None
 
         self.runtimeDependencies["opencloud/libre-graph-api-cpp-qt-client"] = None
-        self.runtimeDependencies["libs/sparkle"] = None
         self.runtimeDependencies["libs/zlib"] = None
         self.runtimeDependencies["libs/sqlite"] = None
         if CraftCore.compiler.isWindows:
@@ -48,8 +47,10 @@ class subinfo(info.infoclass):
         self.runtimeDependencies["qt-libs/qtkeychain"] = None
         self.runtimeDependencies["libs/kdsingleapplication"] = None
 
-        if self.options.dynamic.enableAppImageUpdater:
-            self.runtimeDependencies["libs/libappimageupdate"] = None
+        if self.options.dynamic.enableAutoUpdater:
+            self.runtimeDependencies["libs/sparkle"] = None
+            if self.options.dynamic.enableAppImageUpdater:
+                self.runtimeDependencies["libs/libappimageupdate"] = None
 
         if self.options.dynamic.enableCrashReporter:
             self.runtimeDependencies["opencloud/libcrashreporter-qt"] = None
