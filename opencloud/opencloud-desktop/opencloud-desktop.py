@@ -240,9 +240,9 @@ class Package(CMakePackageBase):
 
     def createPackage(self):
         self.blacklist_file.append(os.path.join(self.blueprintDir(), "blacklist.txt"))
-        self.defines["appname"] = self.applicationExecutable
+        self.defines["appname"] = "OpenCloud"
         self.defines["appimage_native_package_name"] = f'{self.applicationShortname.lower().replace("_", "-")}-desktop'
-        self.defines["apppath"] = "Applications/KDE/" + self.applicationExecutable + ".app"
+        self.defines["apppath"] = "Applications/KDE/" + self.defines["appname"] + ".app"
         self.defines["company"] = "OpenCloud GmbH"
 
         exePath = f"{self.defines['appname']}{CraftCore.compiler.executableSuffix}"
