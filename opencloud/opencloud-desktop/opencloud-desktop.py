@@ -244,6 +244,7 @@ class Package(CMakePackageBase):
         self.defines["appimage_native_package_name"] = f'{self.applicationShortname.lower().replace("_", "-")}-desktop'
         self.defines["apppath"] = "Applications/KDE/" + self.defines["appname"] + ".app"
         self.defines["company"] = "OpenCloud GmbH"
+        self.defines["appx_identity_name"] = "OpenCloudGmbH.OpenCloud"
 
         exePath = f"{self.defines['appname']}{CraftCore.compiler.executableSuffix}"
         if isinstance(self, (NullsoftInstallerPackager, AppxPackager)):
