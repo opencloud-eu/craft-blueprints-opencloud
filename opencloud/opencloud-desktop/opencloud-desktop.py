@@ -6,7 +6,6 @@ from pathlib import Path
 import info
 import utils
 from Blueprints.CraftPackageObject import CraftPackageObject
-from Packager.AppImagePackager import AppImagePackager
 from Packager.AppxPackager import AppxPackager
 from Packager.NullsoftInstallerPackager import NullsoftInstallerPackager
 
@@ -250,9 +249,6 @@ class Package(CMakePackageBase):
         exePath = f"{self.defines['appname']}{CraftCore.compiler.executableSuffix}"
         if isinstance(self, (NullsoftInstallerPackager, AppxPackager)):
             exePath = f"bin/{exePath}"
-        elif isinstance(self, (AppImagePackager)):
-            # workaround for missing define for .desktop file
-            self.defines["appname"] = self.defines["appname"].lower()
         self.defines["shortcuts"] = [
             {
                 "name": self.subinfo.displayName,
