@@ -206,7 +206,7 @@ class Package(CMakePackageBase):
                 return False
         return True
 
-    def openCloudVersion(self):
+    def openCloudVersion(self, withSuffix: bool = True) -> str:
         versionFile = self.sourceDir() / "VERSION.cmake"
         if not versionFile.exists():
             CraftCore.log.warning(f"Failed to find {versionFile}")
@@ -220,8 +220,10 @@ class Package(CMakePackageBase):
             if self.subinfo.options.dynamic.buildNumber:
                 command.append(f"-DMIRALL_VERSION_BUILD={self.subinfo.options.dynamic.buildNumber}")
 
-            command += ["-P", print_var_script]
+            if not withSuffix:
+                command += ["-DMIRALL_VERSION_SUFFIX="]
 
+            command += ["-P", print_var_script]
             value = subprocess.check_output(
                 command,
                 cwd=os.path.dirname(versionFile),
@@ -262,7 +264,12 @@ class Package(CMakePackageBase):
             self.defines["appimage_extra_output"] = ["native_packages"]
         ver = self.openCloudVersion()
         if ver:
-            self.defines["version"] = ver
+            if isinstance(self, (AppxPackager)):
+                # The Microsoft Store requires a version number in the format of X.Y.0.0
+                # so we skip the suffix
+                self.defines["version"] = self.openCloudVersion(False)
+            else:
+                self.defines["version"] = ver
 
         self.addExecutableFilter(r"(bin|libexec)/(?!(" + self.applicationExecutable + r")).*")
         self.ignoredPackages += ["binary/mysql"]
