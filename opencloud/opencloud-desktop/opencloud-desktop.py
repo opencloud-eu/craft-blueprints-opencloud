@@ -273,6 +273,9 @@ class Package(CMakePackageBase):
                 # The Microsoft Store requires a version number in the format of X.Y.0.0
                 # so we skip the suffix
                 self.defines["version"] = self.openCloudVersion(False)
+                self.defines["icon_png_44"] = self.sourceDir() / "src/resources/theme/colored/44-opencloud-icon-ms.png"
+                self.defines["icon_png"] = self.sourceDir() / "src/resources/theme/colored/150-opencloud-icon-ms.png"
+                self.defines["icon_png_310x310"] = self.sourceDir() / "src/resources/theme/colored/310-opencloud-icon-ms.png"
             else:
                 self.defines["version"] = ver
 
