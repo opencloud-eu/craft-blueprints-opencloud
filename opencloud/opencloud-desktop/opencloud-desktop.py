@@ -102,6 +102,11 @@ class Package(CMakePackageBase):
     def applicationShortname(self):
         return self._get_env_vars("ApplicationShortname", "APPLICATION_SHORTNAME", fallback="opencloud")
 
+    def buildNumber(self):
+        if self.subinfo.options.dynamic.buildNumber:
+            return self.subinfo.options.dynamic.buildNumber
+        return super().buildNumber()
+
     def fetch(self):
         if self.subinfo.options.dynamic.buildVfsWin:
             if not self.win_vfs_plugin.instance.fetch(noop=False):
