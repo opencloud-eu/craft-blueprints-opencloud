@@ -275,7 +275,8 @@ class Package(CMakePackageBase):
                 self.defines["version"] = self.openCloudVersion(False)
                 self.defines["icon_png_44"] = self.sourceDir() / "src/resources/theme/colored/44-opencloud-icon-ms.png"
                 self.defines["icon_png"] = self.sourceDir() / "src/resources/theme/colored/150-opencloud-icon-ms.png"
-                self.defines["icon_png_310x310"] = self.sourceDir() / "src/resources/theme/colored/310-opencloud-icon-ms.png"
+                # this one would also require us to set a 310x150 icon
+                # self.defines["icon_png_310x310"] = self.sourceDir() / "src/resources/theme/colored/310-opencloud-icon-ms.png"
             else:
                 self.defines["version"] = ver
 
