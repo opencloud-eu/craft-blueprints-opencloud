@@ -36,6 +36,7 @@ class subinfo(info.infoclass):
         self.runtimeDependencies["libs/sqlite"] = None
         if CraftCore.compiler.isWindows:
             self.buildDependencies["libs/nlohmann-json"] = None
+            self.runtimeDependencies["dev-utils/snoretoast"] = None
 
         self.runtimeDependencies["libs/qt/qtbase"] = None
         self.runtimeDependencies["libs/qt/qttranslations"] = None
@@ -261,6 +262,7 @@ class Package(CMakePackageBase):
                 "name": self.subinfo.displayName,
                 "target": exePath,
                 "description": self.subinfo.description,
+                "appId": "eu.opencloud.desktopclient",
             }
         ]
         self.defines["icon"] = self.buildDir() / "src/gui/opencloud.ico"
@@ -280,7 +282,7 @@ class Package(CMakePackageBase):
             else:
                 self.defines["version"] = ver
 
-        self.addExecutableFilter(r"(bin|libexec)/(?!(" + self.applicationExecutable + r")).*")
+        self.addExecutableFilter(r"(bin|libexec)/(?!(" + self.applicationExecutable + r"|snoretoast)).*")
         self.ignoredPackages += ["binary/mysql"]
         if not CraftCore.compiler.isLinux:
             self.ignoredPackages += ["libs/dbus"]
