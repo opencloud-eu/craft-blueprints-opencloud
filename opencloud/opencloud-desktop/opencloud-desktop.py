@@ -254,13 +254,13 @@ class Package(CMakePackageBase):
         self.defines["apppath"] = "Applications/KDE/" + self.defines["appname"] + ".app"
         self.defines["company"] = "OpenCloud GmbH"
 
-        exePath = f"{self.defines['appname']}{CraftCore.compiler.executableSuffix}"
+        exePath = Path(f"{self.defines['appname']}{CraftCore.compiler.executableSuffix}")
         if isinstance(self, (NullsoftInstallerPackager, AppxPackager)):
-            exePath = f"bin/{exePath}"
+            exePath = Path(f"bin/{exePath}")
         self.defines["shortcuts"] = [
             {
                 "name": self.subinfo.displayName,
-                "target": exePath,
+                "target": str(exePath),
                 "description": self.subinfo.description,
                 "appId": "eu.opencloud.desktopclient",
             }
@@ -279,6 +279,9 @@ class Package(CMakePackageBase):
                 self.defines["icon_png"] = self.sourceDir() / "src/resources/theme/colored/150-opencloud-icon-ms.png"
                 # this one would also require us to set a 310x150 icon
                 # self.defines["icon_png_310x310"] = self.sourceDir() / "src/resources/theme/colored/310-opencloud-icon-ms.png"
+                cmdPath = exePath.parent / f"{exePath.stem}cmd.exe"
+                self.defines["alias_executable"] = str(cmdPath)
+                self.defines["alias"] = cmdPath.name
             else:
                 self.defines["version"] = ver
 
