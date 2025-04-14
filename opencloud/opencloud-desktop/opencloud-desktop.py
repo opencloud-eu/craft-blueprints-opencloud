@@ -282,6 +282,8 @@ class Package(CMakePackageBase):
                 cmdPath = exePath.parent / f"{exePath.stem}cmd.exe"
                 self.defines["alias_executable"] = str(cmdPath)
                 self.defines["alias"] = cmdPath.name
+                # autostart
+                self.defines["startup_task"] = str(exePath)
             else:
                 self.defines["version"] = ver
 
