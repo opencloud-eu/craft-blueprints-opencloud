@@ -4,16 +4,16 @@ from Utils import CraftHash
 
 class subinfo(info.infoclass):
     def setTargets(self):
-        for ver in ["1.0.6"]:
+        for ver in ["1.0.7"]:
             self.targets[ver] = f"https://github.com/opencloud-eu/libre-graph-api-cpp-qt-client/archive/refs/tags/v{ver}.tar.gz"
             self.targetConfigurePath[ver] = "client"
             self.targetInstSrc[ver] = f"libre-graph-api-cpp-qt-client-{ver}"
-        self.targetDigests["1.0.6"] = (["02a8f5efc079d022faf7bc6da6c0a646dfee96ca4d1bd505d8a6f2f1a0ef6ebc"], CraftHash.HashAlgorithm.SHA256)
+        self.targetDigests["1.0.7"] = (["260bc570a16eae2dcfa33595ac994e8e2fa0949cb68cb66fae0fa827090346ed"], CraftHash.HashAlgorithm.SHA256)
 
         self.svnTargets["main"] = f"https://github.com/opencloud-eu/libre-graph-api-cpp-qt-client.git|main|"
         self.targetConfigurePath["main"] = "client"
 
-        self.defaultTarget = "1.0.6"
+        self.defaultTarget = "1.0.7"
         self.description = "Libre Graph Cloud Collaboration API - Qt bindings"
 
     def setDependencies(self):
