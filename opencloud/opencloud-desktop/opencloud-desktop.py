@@ -106,19 +106,6 @@ class Package(CMakePackageBase):
             return self.subinfo.options.dynamic.buildNumber
         return super().buildNumber()
 
-    def fetch(self):
-        if self.subinfo.options.dynamic.buildVfsWin:
-            if not self.win_vfs_plugin.instance.fetch(noop=False):
-                return False
-        return super().fetch()
-
-    def unpack(self):
-        if self.subinfo.options.dynamic.buildVfsWin:
-            if not self.win_vfs_plugin.instance.unpack(noop=False):
-                return False
-        return super().unpack()
-
-
     def dumpSymbols(self) -> bool:
         dest = self.archiveDebugDir() / "symbols"
         utils.cleanDirectory(dest)
