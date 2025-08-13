@@ -86,7 +86,7 @@ class Package(CMakePackageBase):
 
     @property
     def applicationExecutable(self):
-        return "opencloud Beta" if self.subinfo.options.dynamic.buildBeta else "opencloud"
+        return "opencloud_beta" if self.subinfo.options.dynamic.buildBeta else "opencloud"
 
     def buildNumber(self):
         if self.subinfo.options.dynamic.buildNumber:
@@ -198,7 +198,7 @@ class Package(CMakePackageBase):
     def createPackage(self):
         self.blacklist_file.append(os.path.join(self.blueprintDir(), "blacklist.txt"))
         self.defines["appname"] = "OpenCloud"
-        self.defines["desktopFile"] = "opencloud"
+        self.defines["desktopFile"] = self.applicationExecutable
         self.defines["appimage_native_package_name"] = f'{self.applicationExecutable.lower().replace("_", "-")}-desktop'
         self.defines["apppath"] = "Applications/KDE/" + self.defines["appname"] + ".app"
         self.defines["company"] = "OpenCloud GmbH"
