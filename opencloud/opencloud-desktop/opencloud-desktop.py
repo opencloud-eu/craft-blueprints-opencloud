@@ -17,6 +17,7 @@ class subinfo(info.infoclass):
         self.options.dynamic.registerOption("enableAppImageUpdater", False)
         self.options.dynamic.registerOption("enableAutoUpdater", False)
         self.options.dynamic.registerOption("forceAsserts", False)
+        self.options.dynamic.registerOption("buildBeta", False)
 
     def setTargets(self):
         self.svnTargets["main"] = "https://github.com/opencloud-eu/desktop.git|main"
@@ -80,6 +81,7 @@ class Package(CMakePackageBase):
             self.subinfo.options.configure.args += ["-DFORCE_ASSERTS=ON"]
         if self.subinfo.options.dynamic.buildNumber:
             self.subinfo.options.configure.args += [f"-DMIRALL_VERSION_BUILD={self.subinfo.options.dynamic.buildNumber}"]
+        self.subinfo.options.configure.args += [f"-DBETA_CHANNEL_BUILD={self.subinfo.options.dynamic.buildBeta.asOnOff}"]
 
     @staticmethod
     def _get_env_vars(*names, fallback=None):
