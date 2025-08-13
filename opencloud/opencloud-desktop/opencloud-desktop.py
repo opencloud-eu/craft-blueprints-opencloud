@@ -122,29 +122,6 @@ class Package(CMakePackageBase):
                 return False
         return super().unpack()
 
-    def install(self):
-        if not super().install():
-            return False
-
-        if CraftCore.compiler.isWindows:
-            # ensure we can find the sync-exclude.lst
-            configDirName = self.applicationShortname
-
-            if not configDirName:
-                configDirName = self.applicationExecutable
-
-            assert configDirName
-
-            configDir = Path(self.installDir()) / "config" / configDirName
-
-            if not configDir.exists():
-                configDir = Path(self.installDir()) / "etc" / configDirName
-
-            if configDir.exists():
-                if not utils.mergeTree(configDir, Path(self.installDir()) / "bin"):
-                    return False
-
-        return True
 
     def dumpSymbols(self) -> bool:
         dest = self.archiveDebugDir() / "symbols"
