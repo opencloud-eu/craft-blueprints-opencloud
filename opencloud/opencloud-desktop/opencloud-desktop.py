@@ -24,7 +24,7 @@ class subinfo(info.infoclass):
         self.defaultTarget = "main"
 
         self.description = "OpenCloud Desktop"
-        self.displayName = "OpenCloud"
+        self.displayName =  "OpenCloud Beta" if self.options.dynamic.buildBeta else "OpenCloud"
         self.webpage = "https://github.com/opencloud-eu/desktop"
 
     def setDependencies(self):
@@ -203,7 +203,7 @@ class Package(CMakePackageBase):
         self.defines["apppath"] = "Applications/KDE/" + self.defines["appname"] + ".app"
         self.defines["company"] = "OpenCloud GmbH"
 
-        exePath = Path(f"{self.defines['appname']}{CraftCore.compiler.executableSuffix}")
+        exePath = Path(f"{self.applicationExecutable}{CraftCore.compiler.executableSuffix}")
         if isinstance(self, (NullsoftInstallerPackager, AppxPackager)):
             exePath = Path(f"bin/{exePath}")
         self.defines["shortcuts"] = [
