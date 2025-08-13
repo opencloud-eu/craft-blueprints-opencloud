@@ -83,23 +83,10 @@ class Package(CMakePackageBase):
             self.subinfo.options.configure.args += [f"-DMIRALL_VERSION_BUILD={self.subinfo.options.dynamic.buildNumber}"]
         self.subinfo.options.configure.args += [f"-DBETA_CHANNEL_BUILD={self.subinfo.options.dynamic.buildBeta.asOnOff}"]
 
-    @staticmethod
-    def _get_env_vars(*names, fallback=None):
-        for name in names:
-            try:
-                value = os.environ[name]
-
-            except KeyError:
-                continue
-
-            return value
-
-        else:
-            return fallback
 
     @property
     def applicationExecutable(self):
-        return self._get_env_vars("ApplicationExecutable", "APPLICATION_EXECUTABLE", fallback="opencloud")
+        return "opencloud Beta" if self.subinfo.options.dynamic.buildBeta else "opencloud"
 
     def buildNumber(self):
         if self.subinfo.options.dynamic.buildNumber:
