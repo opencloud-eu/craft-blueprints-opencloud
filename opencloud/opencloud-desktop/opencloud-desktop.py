@@ -101,10 +101,6 @@ class Package(CMakePackageBase):
     def applicationExecutable(self):
         return self._get_env_vars("ApplicationExecutable", "APPLICATION_EXECUTABLE", fallback="opencloud")
 
-    @property
-    def applicationShortname(self):
-        return self._get_env_vars("ApplicationShortname", "APPLICATION_SHORTNAME", fallback="opencloud")
-
     def buildNumber(self):
         if self.subinfo.options.dynamic.buildNumber:
             return self.subinfo.options.dynamic.buildNumber
@@ -229,7 +225,7 @@ class Package(CMakePackageBase):
         self.blacklist_file.append(os.path.join(self.blueprintDir(), "blacklist.txt"))
         self.defines["appname"] = "OpenCloud"
         self.defines["desktopFile"] = "opencloud"
-        self.defines["appimage_native_package_name"] = f'{self.applicationShortname.lower().replace("_", "-")}-desktop'
+        self.defines["appimage_native_package_name"] = f'{self.applicationExecutable.lower().replace("_", "-")}-desktop'
         self.defines["apppath"] = "Applications/KDE/" + self.defines["appname"] + ".app"
         self.defines["company"] = "OpenCloud GmbH"
 
