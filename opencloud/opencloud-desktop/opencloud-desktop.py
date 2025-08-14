@@ -233,6 +233,9 @@ class Package(CMakePackageBase):
                 self.defines["alias"] = cmdPath.name
                 # autostart
                 self.defines["startup_task"] = str(exePath)
+
+                self.defines["additional_xmlns"] = """xmlns:desktop3="http://schemas.microsoft.com/appx/manifest/desktop/windows10/3"\n"""
+                self.defines["extensions"] = """<desktop3:Extension Category="windows.cloudFiles"><desktop3:CloudFiles></desktop3:CloudFiles></desktop3:Extension>"""
             else:
                 self.defines["version"] = ver
 
