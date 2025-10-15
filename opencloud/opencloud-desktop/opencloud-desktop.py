@@ -197,7 +197,7 @@ class Package(CMakePackageBase):
 
     def createPackage(self):
         self.blacklist_file.append(os.path.join(self.blueprintDir(), "blacklist.txt"))
-        self.defines["appname"] = "OpenCloud"
+        self.defines["appname"] = "OpenCloud" if not self.subinfo.options.dynamic.buildBeta else "OpenCloud Beta"
         self.defines["desktopFile"] = self.applicationExecutable
         self.defines["appimage_native_package_name"] = f'{self.applicationExecutable.lower().replace("_", "-")}-desktop'
         self.defines["apppath"] = "Applications/KDE/" + self.defines["appname"] + ".app"
