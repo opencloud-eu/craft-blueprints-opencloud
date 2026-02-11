@@ -8,6 +8,7 @@ class subinfo(info.infoclass):
         self.defaultTarget = "main"
 
     def setDependencies(self):
+        self.buildDependencies["libs/nlohmann-json"] = None
         self.buildDependencies["kde/frameworks/extra-cmake-modules"] = None
 
 
