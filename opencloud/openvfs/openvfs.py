@@ -3,7 +3,7 @@ import info
 
 class subinfo(info.infoclass):
     def setTargets(self):
-        self.svnTargets["main"] = "git@github.com:dragotin/openvfs.git|main"
+        self.svnTargets["main"] = "https://github.com/dragotin/openvfs.git|main"
         self.targetInstSrc["main"] = "openVfsFuse"
         self.defaultTarget = "main"
 
