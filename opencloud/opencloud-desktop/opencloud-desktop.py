@@ -35,6 +35,7 @@ class subinfo(info.infoclass):
         self.runtimeDependencies["opencloud/libre-graph-api-cpp-qt-client"] = None
         self.runtimeDependencies["libs/zlib"] = None
         self.runtimeDependencies["libs/sqlite"] = None
+        self.runtimeDependencies["libs/libgit2"] = None
         if CraftCore.compiler.isWindows:
             self.runtimeDependencies["dev-utils/snoretoast"] = None
 
