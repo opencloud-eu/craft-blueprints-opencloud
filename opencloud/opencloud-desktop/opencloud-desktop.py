@@ -68,8 +68,6 @@ class Package(CMakePackageBase):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.subinfo.options.fetch.checkoutSubmodules = True
-        # TODO: fix msi generation which expects the existance of a /translation dir
-        self.subinfo.options.package.moveTranslationsToBin = False
 
         if self.subinfo.options.dynamic.enableCrashReporter:
             self.subinfo.options.configure.args += ["-DWITH_CRASHREPORTER=ON"]
