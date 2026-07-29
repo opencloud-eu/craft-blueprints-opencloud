@@ -16,6 +16,7 @@ class subinfo(info.infoclass):
         self.options.dynamic.registerOption("enableCrashReporter", False)
         self.options.dynamic.registerOption("enableAppImageUpdater", False)
         self.options.dynamic.registerOption("enableAutoUpdater", False)
+        self.options.dynamic.registerOption("enableOpenVFS", False)
         self.options.dynamic.registerOption("forceAsserts", False)
         self.options.dynamic.registerOption("buildBeta", False)
 
@@ -45,7 +46,8 @@ class subinfo(info.infoclass):
         self.runtimeDependencies["libs/qt/qtdeclarative"] = None
         if CraftCore.compiler.isLinux:
             self.runtimeDependencies["libs/qt/qtwayland"] = None
-            self.runtimeDependencies["opencloud/openvfs"] = None
+            if self.options.dynamic.enableOpenVFS:
+                self.runtimeDependencies["opencloud/openvfs"] = None
 
         self.runtimeDependencies["qt-libs/qtkeychain"] = None
         self.runtimeDependencies["libs/kdsingleapplication"] = None
@@ -75,6 +77,8 @@ class Package(CMakePackageBase):
             self.subinfo.options.configure.args += ["-DWITH_AUTO_UPDATER=ON"]
         if self.subinfo.options.dynamic.enableAppImageUpdater:
             self.subinfo.options.configure.args += ["-DWITH_APPIMAGEUPDATER=ON"]
+        if self.subinfo.options.dynamic.enableOpenVFS:
+            self.subinfo.options.configure.args += ["-DVIRTUAL_FILE_SYSTEM_PLUGINS=off;cfapi;openvfs"]
         if self.subinfo.options.dynamic.forceAsserts:
             self.subinfo.options.configure.args += ["-DFORCE_ASSERTS=ON"]
         if self.subinfo.options.dynamic.buildNumber:
