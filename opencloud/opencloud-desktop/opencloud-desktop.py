@@ -62,6 +62,9 @@ class subinfo(info.infoclass):
             self.buildDependencies["dev-utils/breakpad"] = None
             self.buildDependencies["dev-utils/symsorter"] = None
 
+        if self.options.dynamic.buildBeta:
+            self.buildDependencies["python-modules/pillow"] = None
+
 
 from Package.CMakePackageBase import *
 
@@ -216,7 +219,7 @@ class Package(CMakePackageBase):
             }
         ]
         self.defines["icon"] = self.buildDir() / "src/gui/opencloud.ico"
-        self.defines["pkgproj"] = self.buildDir() / "admin/osx/macosx.pkgproj"
+        self.defines["pkgproj"] = self.archiveDir() / "OpenCloudAssets/macosx.pkgproj"
         if CraftPackageObject.get("dev-utils/linuxdeploy-plugin-native-packages").isInstalled:
             self.defines["appimage_extra_output"] = ["native_packages"]
         ver = self.openCloudVersion()
@@ -225,8 +228,8 @@ class Package(CMakePackageBase):
                 # The Microsoft Store requires a version number in the format of X.Y.0.0
                 # so we skip the suffix
                 self.defines["version"] = self.openCloudVersion(False)
-                self.defines["icon_png_44"] = self.sourceDir() / "src/resources/theme/colored/44-opencloud-icon-ms.png"
-                self.defines["icon_png"] = self.sourceDir() / "src/resources/theme/colored/150-opencloud-icon-ms.png"
+                self.defines["icon_png_44"] = self.archiveDir() / "OpenCloudAssets/44-opencloud-icon-ms.png"
+                self.defines["icon_png"] = self.archiveDir() / "OpenCloudAssets/150-opencloud-icon-ms.png"
                 # this one would also require us to set a 310x150 icon
                 # self.defines["icon_png_310x310"] = self.sourceDir() / "src/resources/theme/colored/310-opencloud-icon-ms.png"
                 cmdPath = exePath.parent / f"{exePath.stem}cmd.exe"
@@ -241,8 +244,10 @@ class Package(CMakePackageBase):
                 ] = """<desktop3:Extension Category="windows.cloudFiles"><desktop3:CloudFiles></desktop3:CloudFiles></desktop3:Extension>"""
             else:
                 self.defines["version"] = ver
-
-        self.addExecutableFilter(r"(bin|libexec)/(?!(" + self.applicationExecutable + r"|snoretoast|openvfsfuse)).*")
+        # the filter is executed before the files are patched so the name is always opencloud
+        self.addExecutableFilter(r"(bin|libexec)/(?!(opencloud|snoretoast|openvfsfuse)).*")
+        # always keep our assets, regardless of any blacklist
+        self.addWhitelistFilter(lambda fileName, root: utils.regexFileFilter(fileName, root, [re.compile(r"^OpenCloudAssets/")]))
         self.ignoredPackages += ["binary/mysql"]
         if not CraftCore.compiler.isLinux:
             self.ignoredPackages += ["libs/dbus"]
@@ -251,5 +256,11 @@ class Package(CMakePackageBase):
     def preArchiveMove(self):
         if self.subinfo.options.dynamic.enableCrashReporter:
             if not self.dumpSymbols():
+                return False
+        return super().preArchiveMove()
+
+    def preArchive(self):
+        if self.subinfo.options.dynamic.buildBeta:
+            if not utils.system(["python3", self.sourceDir() / "admin/theme_patcher.py", self.archiveDir(), self.sourceDir() / "beta.json"]):
                 return False
         return super().preArchive()
