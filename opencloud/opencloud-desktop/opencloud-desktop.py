@@ -194,9 +194,6 @@ class Package(CMakePackageBase):
             return value
 
         version_str = get_var("MIRALL_VERSION_STRING")
-
-        print(f"*** version string fetched with CMake: {version_str} ***")
-
         return version_str
 
     def createPackage(self):
