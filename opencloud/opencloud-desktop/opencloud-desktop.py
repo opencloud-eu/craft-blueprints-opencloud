@@ -235,10 +235,31 @@ class Package(CMakePackageBase):
                 # autostart
                 self.defines["startup_task"] = str(exePath)
 
+
                 self.defines["additional_xmlns"] = """xmlns:desktop3="http://schemas.microsoft.com/appx/manifest/desktop/windows10/3"\n"""
-                self.defines[
-                    "extensions"
-                ] = """<desktop3:Extension Category="windows.cloudFiles"><desktop3:CloudFiles></desktop3:CloudFiles></desktop3:Extension>"""
+                # the clsid must match OC_EXPLORER_COMMAND_CLSID_STRING in shell_integration/windows/explorercommandids.h
+                explorerCommandClsid = "850FD5BE-2D56-4653-9DD7-C6F5DF8143B3"
+                self.defines["extensions"] = f"""
+<desktop3:Extension Category="windows.cloudFiles">
+  <desktop3:CloudFiles>
+    <!-- the schema requires the handlers once CloudFilesContextMenus is present, they are optional without a Clsid -->
+    <desktop3:CustomStateHandler />
+    <desktop3:ThumbnailProviderHandler />
+    <desktop3:ExtendedPropertyHandler />
+    <desktop3:BannersHandler />
+    <desktop3:CloudFilesContextMenus>
+      <desktop3:Verb Id="OpenCloud" Clsid="{explorerCommandClsid}" />
+    </desktop3:CloudFilesContextMenus>
+  </desktop3:CloudFiles>
+</desktop3:Extension>
+<com:Extension Category="windows.comServer">
+  <com:ComServer>
+    <com:SurrogateServer DisplayName="OpenCloud Explorer integration">
+      <com:Class Id="{explorerCommandClsid}" Path="bin\\OpenCloudExplorerCommand.dll" ThreadingModel="STA" />
+    </com:SurrogateServer>
+  </com:ComServer>
+</com:Extension>
+"""
             else:
                 self.defines["version"] = ver
         # the filter is executed before the files are patched so the name is always opencloud
