@@ -13,7 +13,7 @@ class subinfo(info.infoclass):
         self.buildDependencies["dev-utils/cmake"] = None
         self.buildDependencies["kde/frameworks/extra-cmake-modules"] = None
         self.runtimeDependencies["libs/qt/qtbase"] = None
-        if CraftCore.compiler.isLinux:
+        if CraftCore.compiler.platform.isLinux:
             self.buildDependencies["dev-utils/breakpad"] = None
 
 
@@ -23,4 +23,4 @@ from Package.CMakePackageBase import *
 class Package(CMakePackageBase):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.subinfo.options.fetch.checkoutSubmodules = not CraftCore.compiler.isLinux
+        self.subinfo.options.fetch.checkoutSubmodules = not CraftCore.compiler.platform.isLinux

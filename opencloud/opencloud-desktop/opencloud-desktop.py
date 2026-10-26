@@ -36,7 +36,7 @@ class subinfo(info.infoclass):
         self.runtimeDependencies["opencloud/libre-graph-api-cpp-qt-client"] = None
         self.runtimeDependencies["libs/zlib"] = None
         self.runtimeDependencies["libs/sqlite"] = None
-        if CraftCore.compiler.isWindows:
+        if CraftCore.compiler.platform.isWindows:
             self.runtimeDependencies["dev-utils/snoretoast"] = None
 
         self.runtimeDependencies["libs/qt/qtbase"] = None
@@ -44,7 +44,7 @@ class subinfo(info.infoclass):
         self.runtimeDependencies["libs/qt/qtsvg"] = None
         self.runtimeDependencies["libs/qt/qtimageformats"] = None
         self.runtimeDependencies["libs/qt/qtdeclarative"] = None
-        if CraftCore.compiler.isLinux:
+        if CraftCore.compiler.platform.isLinux:
             self.runtimeDependencies["libs/qt/qtwayland"] = None
             if self.options.dynamic.enableOpenVFS:
                 self.runtimeDependencies["opencloud/openvfs"] = None
@@ -101,9 +101,9 @@ class Package(CMakePackageBase):
         dest = self.archiveDebugDir() / "symbols"
         utils.cleanDirectory(dest)
         allowError = None
-        if CraftCore.compiler.isWindows:
+        if CraftCore.compiler.platform.isWindows:
             skipDumpPattern = r"icu\d\d\.dll|asprintf-0\.dll"
-            if CraftCore.compiler.isWindows:
+            if CraftCore.compiler.platform.isWindows:
                 for package in ["libs/runtime", "libs/d3dcompiler", "libs/gettext"]:
                     dbPackage = CraftCore.installdb.getInstalledPackages(CraftPackageObject.get(package))
                     if dbPackage:
@@ -134,13 +134,13 @@ class Package(CMakePackageBase):
                 CraftCore.log.warning(f"{installedBinary} does not exist")
                 return False
 
-            if CraftCore.compiler.isWindows:
+            if CraftCore.compiler.platform.isWindows:
                 symbolFile = Path(f"{installedBinary}.pdb")
                 if not symbolFile.exists():
                     pdb = utils.getPDBForBinary(installedBinary)
                     if pdb:
                         symbolFile = installedBinary.parent / utils.getPDBForBinary(installedBinary).name
-            elif CraftCore.compiler.isMacOS:
+            elif CraftCore.compiler.platform.isMacOS:
                 debugInfoPath = installedBinary
                 bundleDir = list(filter(lambda x: x.name.endswith(".framework") or x.name.endswith(".app"), debugInfoPath.parents))
                 if bundleDir:
@@ -148,7 +148,7 @@ class Package(CMakePackageBase):
                 debugInfoPath = Path(f"{debugInfoPath}.dSYM/Contents/Resources/DWARF/") / installedBinary.name
                 if debugInfoPath.exists():
                     symbolFile = debugInfoPath
-            elif CraftCore.compiler.isUnix:
+            elif CraftCore.compiler.platform.isUnix:
                 symbolFile = Path(f"{installedBinary}.debug")
 
             if not symbolFile.exists():
@@ -204,7 +204,7 @@ class Package(CMakePackageBase):
         self.defines["apppath"] = "Applications/KDE/" + self.defines["appname"] + ".app"
         self.defines["company"] = "OpenCloud GmbH"
 
-        exePath = Path(f"{self.applicationExecutable}{CraftCore.compiler.executableSuffix}")
+        exePath = Path(f"{self.applicationExecutable}{CraftCore.compiler.platform.executableSuffix}")
         if isinstance(self, (NullsoftInstallerPackager, AppxPackager)):
             exePath = Path(f"bin/{exePath}")
         self.defines["shortcuts"] = [
@@ -267,7 +267,7 @@ class Package(CMakePackageBase):
         # always keep our assets, regardless of any blacklist
         self.addWhitelistFilter(lambda fileName, root: utils.regexFileFilter(fileName, root, [re.compile(r"^OpenCloudAssets/")]))
         self.ignoredPackages += ["binary/mysql"]
-        if not CraftCore.compiler.isLinux:
+        if not CraftCore.compiler.platform.isLinux:
             self.ignoredPackages += ["libs/dbus"]
         return super().createPackage()
 

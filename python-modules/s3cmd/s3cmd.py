@@ -11,7 +11,7 @@ class subinfo(info.infoclass):
         self.defaultTarget = "master"
 
     def setDependencies(self):
-        if not CraftCore.compiler.isMSVC():
+        if not CraftCore.compiler.compiler.isMSVC:
             self.buildDependencies["python-modules/setuptools"] = None
         self.runtimeDependencies["python-modules/python-dateutil"] = None
         self.runtimeDependencies["python-modules/python-magic"] = None

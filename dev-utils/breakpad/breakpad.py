@@ -28,7 +28,7 @@ class subinfo(info.infoclass):
 
     def setDependencies(self):
         self.buildDependencies["dev-utils/depot-tools"] = None
-        if CraftCore.compiler.isLinux:
+        if CraftCore.compiler.platform.isLinux:
             self.buildDependencies["libs/elfutils"] = None
         self.buildDependencies["virtual/base"] = None
 
@@ -40,7 +40,7 @@ class Package(AutoToolsPackageBase):
     def fetch(self):
         depot_tools = CraftPackageObject.get("dev-utils/depot-tools").instance.sourceDir()
         srcParent = self.sourceDir().parent
-        scriptSuffix = ".bat" if CraftCore.compiler.isWindows else ""
+        scriptSuffix = ".bat" if CraftCore.compiler.platform.isWindows else ""
         if not srcParent.exists():
             if not (utils.createDir(srcParent) and utils.system([depot_tools / f"fetch{scriptSuffix}", "--no-history", "breakpad"], cwd=srcParent)):
                 return False
