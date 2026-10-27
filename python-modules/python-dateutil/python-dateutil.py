@@ -11,6 +11,7 @@ class subinfo(info.infoclass):
 
     def setDependencies(self):
         self.runtimeDependencies["python-modules/six"] = None
+        self.buildDependencies["python-modules/setuptools-scm"] = None
 
 
 class Package(PipPackageBase):
