@@ -32,8 +32,8 @@ class Package(PipPackageBase):
         if CraftCore.compiler.platform.isWindows:
             if not utils.createShim(
                     self.installDir() / f"bin/s3cmd{CraftCore.compiler.platform.executableSuffix}",
-                    f"python3{CraftCore.compiler.platform.executableSuffix}",
-                    args= [f"{self.installPrefix()}/bin/Scripts/s3cmd"],
+                    self.installDir() / f"bin/python3{CraftCore.compiler.platform.executableSuffix}",
+                    args= [self.installPrefix() / "bin/Scripts/s3cmd"],
                     useAbsolutePath=False,
             ):
                 return False
