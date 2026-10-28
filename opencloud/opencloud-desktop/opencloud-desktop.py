@@ -242,11 +242,12 @@ class Package(CMakePackageBase):
                 self.defines["extensions"] = f"""
 <desktop3:Extension Category="windows.cloudFiles">
   <desktop3:CloudFiles>
-    <!-- the schema requires the handlers once CloudFilesContextMenus is present, they are optional without a Clsid -->
-    <desktop3:CustomStateHandler />
-    <desktop3:ThumbnailProviderHandler />
-    <desktop3:ExtendedPropertyHandler />
-    <desktop3:BannersHandler />
+    <!-- the schema requires the handlers once CloudFilesContextMenus is present,
+         without a Clsid Explorer ignores the sync roots of the package, the null clsid disables them -->
+    <desktop3:CustomStateHandler Clsid="00000000-0000-0000-0000-000000000000" />
+    <desktop3:ThumbnailProviderHandler Clsid="00000000-0000-0000-0000-000000000000" />
+    <desktop3:ExtendedPropertyHandler Clsid="00000000-0000-0000-0000-000000000000" />
+    <desktop3:BannersHandler Clsid="00000000-0000-0000-0000-000000000000" />
     <desktop3:CloudFilesContextMenus>
       <desktop3:Verb Id="OpenCloud" Clsid="{explorerCommandClsid}" />
     </desktop3:CloudFilesContextMenus>
